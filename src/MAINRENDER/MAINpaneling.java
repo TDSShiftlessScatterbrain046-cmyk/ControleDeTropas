@@ -23,6 +23,7 @@ public class MAINpaneling extends JPanel implements Runnable{
 		this.setBackground(Color.MAGENTA);
 		this.setOpaque(true);
 		this.setLayout(null);
+  this.setFocusable(true);
 		this.setDoubleBuffered(true);
 	}
 	
