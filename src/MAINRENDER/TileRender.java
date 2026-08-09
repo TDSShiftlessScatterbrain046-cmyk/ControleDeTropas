@@ -5,15 +5,60 @@ import java.awt.*;
 import javax.swing.*;
 
 public class TileRender {
-    
-	JLabel label;
-	
-	public TileRender() {
-		ImageIcon imageIcon = new ImageIcon("/home/alunoinfo/eclipse-workspace/BD/src/BD/CONTROLEDETROPAS_2K/src/ASSETS/images.png");
-	    Image img = imageIcon.getImage();
-        Image scaledImg = img.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
-        ImageIcon finalIcon = new ImageIcon(scaledImg);
-	    label = new JLabel(imageIcon);
-	}
-    
+
+        int TileSize, XTiles, YTiles;
+        int[] currentPos = {0,0};
+        int[] currentChunk = {0,0};
+        int paddingTiles = 2;
+        int PadPixels = paddingTiles*TileSize;
+        int chunkSize = 16;
+        int[][][] ChunkLoadedIds = new int[9][chunkSize][chunkSize]; // chunk, x, y
+
+      public TileRender(int tileSize, int xTiles, int yTiles) {
+         TileSize = tileSize;
+         XTiles = xTiles;
+         YTiles = yTiles;
+         this.setPreferredSize( Dimension(xTiles*tileSize,yTiles*tileSize));
+         this.setLayout(new Gridlayout(xTiles+paddingTiles,yTiles+paddingTiles));
+         this.setBounds(-PadPixels,-PadPixels,xTiles*tileSize,yTiles*tileSize);
+         this.setDoubleBuffered(true);
+      }
+      
+      
+      public void Update(int[] newChunk) {
+        if(newChunk == currentChunk){
+          return;
+        }
+        /*
+        currentChunk = newChunk;
+        if(map folder file exist)
+            for(int i=0; i<9;i++){
+              int[] filecheck = currentchunk;
+              filecheck[0] += i%3;
+              filecheck[1] += i/3;
+              if (filecheckmap exists)    
+                 ChunkLoadedIds[i] = Map.receive(filecheck);
+          }
+        */
+      }
+      public void Draw(int newPos){
+        currentPos = newPos;
+        int[] TilePos = currentPos;
+        TilePos[0] /= tileSize;
+        TilePos[1] /= tileSize;
+        this.setLocation(currentPos[0]-TilePos[0],currentPos[1]-TilePos[1]);
+        int[] halfwidth = {XTiles/2,YTiles/2};
+        for(int i=0;i<(XTiles+paddingTiles);i++)
+          for(int j=0;j<(YTiles+paddingTiles);j++){
+            int tempX = TilePos[0]+halfwidth[0]+i;
+            int tempY = TilePos[1]+halfwidth[1]+j;
+            int tempC = 0;
+            if(tempX>=16){tempX-=16;tempC+=1}
+            if(tempX<0){TempX+=16;tempC-=1}
+            if(tempX>=16){TempY-=16;tempC+=3}
+            if(tempX<0){TempY+=16;tempC-=3}
+            Tile zeBigeling = new Tile(ChunkLoadedIds[tempC,TempX,TempY]);
+            this.add(zeBigeling);
+          }
+      }
 }
