@@ -7,7 +7,7 @@ public class Tile extends JLabel{
   
         int id;
 
-        public TileRender(int id) {
+        public Tile(int id) {
             this.id = id;
             this.setBackground(Color.black);
             switch(id){
