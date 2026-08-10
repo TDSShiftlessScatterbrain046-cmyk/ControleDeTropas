@@ -10,10 +10,10 @@ public class MAINpaneling extends JPanel implements Runnable{
 	int FPS = 10;
 	Directionals keyH = new Directionals();
 	Thread gameThread;
+	TileRender TileRenderer;
 
-	int playerX = 100;
-	int playerY = 100;
-	int playerSpeed = 0;
+	int[] playerPos = {100,100};
+	int playerSpeed = 2;
 	
 	public MAINpaneling(int tileSize, int xTiles, int yTiles) {
 		TileSize = tileSize;
@@ -23,7 +23,9 @@ public class MAINpaneling extends JPanel implements Runnable{
 		this.setBackground(Color.MAGENTA);
 		this.setOpaque(true);
 		this.setLayout(null);
-  this.setFocusable(true);
+		this.setFocusable(true);
+		this.addKeyListener(keyH);
+		TileRenderer = new TileRender(TileSize, XTiles, YTiles);
 		this.setDoubleBuffered(true);
 	}
 	
@@ -68,18 +70,19 @@ public class MAINpaneling extends JPanel implements Runnable{
 		}		
 	}
 	
-	public void update() {
-		this.playerX += keyH.sides[0]*playerSpeed;
-		this.playerY += keyH.sides[1]*playerSpeed;
-		System.out.println("del:"+keyH.sides[0]+""+keyH.sides[1]);
-
+	public void update() {	
+		
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D grap2D = (Graphics2D) g;
 		grap2D.setColor(Color.BLUE);
-		grap2D.fillRect(playerX,playerY,TileSize,TileSize);
+		grap2D.fillRect(playerPos[0],playerPos[1],TileSize,TileSize);
 		grap2D.dispose();
+		TileRenderer.Draw(playerPos);
+		TileRenderer.Draw(playerPos);
+
+		
 	}
 }

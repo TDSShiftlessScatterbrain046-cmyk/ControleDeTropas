@@ -23,7 +23,9 @@ public class MainRender {
 	    
 	    janela.setLocationRelativeTo(null); // Centraliza a janela na tela
 	    janela.setVisible(true); // Torna a janela visível
-	   
+	    
+		MainPanel.requestFocusInWindow();
+		
 	    MainPanel.StartGameThread();
 	    
         
