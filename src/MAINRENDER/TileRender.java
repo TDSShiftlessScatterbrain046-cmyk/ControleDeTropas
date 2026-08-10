@@ -1,10 +1,9 @@
 package MAINRENDER;
 
 import java.awt.*;
-
 import javax.swing.*;
 
-public class TileRender {
+public class TileRender extends JPanel{
 
         int TileSize, XTiles, YTiles;
         int[] currentPos = {0,0};
@@ -18,9 +17,9 @@ public class TileRender {
          TileSize = tileSize;
          XTiles = xTiles;
          YTiles = yTiles;
-         this.setPreferredSize( Dimension(xTiles*tileSize,yTiles*tileSize));
-         this.setLayout(new Gridlayout(xTiles+paddingTiles,yTiles+paddingTiles));
          this.setBounds(-PadPixels,-PadPixels,xTiles*tileSize,yTiles*tileSize);
+         this.setPreferredSize(new Dimension(xTiles*tileSize,yTiles*tileSize));
+         this.setLayout(new GridLayout(xTiles+paddingTiles,yTiles+paddingTiles));
          this.setDoubleBuffered(true);
       }
       
@@ -41,11 +40,11 @@ public class TileRender {
           }
         */
       }
-      public void Draw(int newPos){
+      public void Draw(int[] newPos){
         currentPos = newPos;
         int[] TilePos = currentPos;
-        TilePos[0] /= tileSize;
-        TilePos[1] /= tileSize;
+        TilePos[0] /= TileSize;
+        TilePos[1] /= TileSize;
         this.setLocation(currentPos[0]-TilePos[0],currentPos[1]-TilePos[1]);
         int[] halfwidth = {XTiles/2,YTiles/2};
         for(int i=0;i<(XTiles+paddingTiles);i++)
@@ -53,11 +52,12 @@ public class TileRender {
             int tempX = TilePos[0]+halfwidth[0]+i;
             int tempY = TilePos[1]+halfwidth[1]+j;
             int tempC = 0;
-            if(tempX>=16){tempX-=16;tempC+=1}
-            if(tempX<0){TempX+=16;tempC-=1}
-            if(tempX>=16){TempY-=16;tempC+=3}
-            if(tempX<0){TempY+=16;tempC-=3}
-            Tile zeBigeling = new Tile(ChunkLoadedIds[tempC,TempX,TempY]);
+            if(tempX>=16)	{tempX-=16;	tempC+=1;}
+            if(tempX<0)		{tempX+=16;	tempC-=1;}
+            if(tempY>=16)	{tempY-=16;	tempC+=3;}
+            if(tempY<0)		{tempY+=16;	tempC-=3;}
+            System.out.println("Chunk:"+tempC+"X:"+tempX+"Y:"+tempY);
+            Tile zeBigeling = new Tile(ChunkLoadedIds[tempC][tempX][tempY]);
             this.add(zeBigeling);
           }
       }
