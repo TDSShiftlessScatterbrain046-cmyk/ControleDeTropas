@@ -1,10 +1,29 @@
 package MAINRENDER;
 
-public class CreatureRender {
+import javax.swing.*;
+import INPUTS.*;
+import entity.*;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+public class CreatureRender extends JPanel {
+
+	int TileSize = 32;
+	player CurPlayer = new player(TileSize);
+	Directionals KeyH;
+	
+	public CreatureRender(int TileSize, Directionals KeyH) {
+		this.TileSize = TileSize;
+		this.setLayout(null);
+		this.KeyH = KeyH;
+	}
+	
+
+	public void Update() {
 		
 	}
+	
+	public void Draw() {
+		
+	}
+	
 
 }

@@ -10,12 +10,23 @@ public class Tile extends JLabel{
         public Tile(int id) {
             this.id = id;
             this.setBackground(Color.black);
+            ImageIcon imageIcon;
             switch(id){
-              case 1:
-                this.setBackground(Color.red);
-                ImageIcon imageIcon = new ImageIcon("/home/alunoinfo/eclipse-workspace/BD/src/BD/CONTROLEDETROPAS_2K/src/ASSETS/images.png");
-                this.setIcon(imgResizer(imageIcon,32));
-                break;
+            	case 0:
+	                this.setBackground(Color.black);
+	                imageIcon = new ImageIcon("/home/alunoinfo/eclipse-workspace/BD/src/BD/CONTROLEDETROPAS_2K/src/ASSETS/images.png");
+	                this.setIcon(imgResizer(imageIcon,32));
+	                break;
+            	case 1:
+            		this.setBackground(Color.red);
+            		imageIcon = new ImageIcon("/home/alunoinfo/eclipse-workspace/BD/src/BD/CONTROLEDETROPAS_2K/src/ASSETS/images.png");
+            		this.setIcon(imgResizer(imageIcon,32));
+            		break;
+            	case 2:
+            		this.setBackground(Color.green);
+            		imageIcon = new ImageIcon("/home/alunoinfo/eclipse-workspace/BD/src/BD/CONTROLEDETROPAS_2K/src/ASSETS/images.png");
+            		this.setIcon(imgResizer(imageIcon,32));
+            		break;
             }
             this.setOpaque(true);
         }

@@ -7,26 +7,34 @@ import INPUTS.*;
 public class MAINpaneling extends JPanel implements Runnable{
 
 	int TileSize, XTiles, YTiles;
-	int FPS = 10;
+	int FPS = 1;
 	Directionals keyH = new Directionals();
 	Thread gameThread;
 	TileRender TileRenderer;
-
-	int[] playerPos = {100,100};
-	int playerSpeed = 2;
+	CreatureRender CreatureRenderer;
+	Camera cam;
+	
+	int chunkSize = 16;
+	int cameraSpeed = 5; 
+	int[] cameraCurPos = {0,0}; 
 	
 	public MAINpaneling(int tileSize, int xTiles, int yTiles) {
 		TileSize = tileSize;
 		XTiles = xTiles;
 		YTiles = yTiles;
 		this.setPreferredSize(new Dimension(xTiles*tileSize,yTiles*tileSize));
-		this.setBackground(Color.MAGENTA);
 		this.setOpaque(true);
 		this.setLayout(null);
 		this.setFocusable(true);
 		this.addKeyListener(keyH);
-		TileRenderer = new TileRender(TileSize, XTiles, YTiles);
+		cam = new Camera(TileSize, cameraCurPos, chunkSize, keyH);
+		TileRenderer = new TileRender(TileSize, XTiles, YTiles, chunkSize);
+		CreatureRenderer = new CreatureRender(TileSize,keyH);
+		this.setBackground(Color.MAGENTA);
+		this.add(TileRenderer);
+		this.add(CreatureRenderer);
 		this.setDoubleBuffered(true);
+		
 	}
 	
 	
@@ -57,7 +65,7 @@ public class MAINpaneling extends JPanel implements Runnable{
 			
 			if (delta >= 1){
 				update();
-				repaint();
+				draw();
 				delta--;
 				
 				drawCount++;
@@ -71,18 +79,22 @@ public class MAINpaneling extends JPanel implements Runnable{
 	}
 	
 	public void update() {	
-		
+		TileRenderer.Update(cam);
+		CreatureRenderer.Update();
 	}
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D grap2D = (Graphics2D) g;
-		grap2D.setColor(Color.BLUE);
-		grap2D.fillRect(playerPos[0],playerPos[1],TileSize,TileSize);
-		grap2D.dispose();
-		TileRenderer.Draw(playerPos);
-		TileRenderer.Draw(playerPos);
-
-		
+	public void draw() {
+		this.setBackground(Color.MAGENTA);
+		TileRenderer.Draw(cam);
+		CreatureRenderer.Draw();
 	}
+	
+//	public void paintComponent(Graphics g) {
+//		super.paintComponent(g);
+//		Graphics2D grap2D = (Graphics2D) g;
+//		grap2D.drawRect(XTiles, YTiles, TileSize, TileSize);
+//		grap2D.dispose();
+//	}
+	
+
 }
